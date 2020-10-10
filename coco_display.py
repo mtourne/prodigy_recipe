@@ -20,7 +20,7 @@ if ADD_BOUNDING_BOX_HARDCODED:
         im = PIL.Image.open(image_path)
         [x, y, w, h] = annotation['bbox']
         draw = ImageDraw.Draw(im)
-        draw.rectangle(((x, y), (x+w, y+h)), outline="red")
+        draw.rectangle(((x, y), (x+w, y+h)), outline="red", width=4)
         return im
 
 
