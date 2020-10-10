@@ -2,6 +2,8 @@
 
 ##  <kbd>recipe</kbd> `coco-display`: display and review each object of a COCO dataset
 
+![coco-display UI image](images/coco-display-tiny.png?raw=true)
+
 takes a COCO format annotations.json and image folder
 
 each annoteded bounding box is hardcoded on the image and shown 
