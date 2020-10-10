@@ -3,6 +3,7 @@ from prodigy.components.loaders import JSON
 from prodigy.util import split_string, log
 
 import os
+import io
 import base64
 import mimetypes
 
@@ -11,6 +12,7 @@ from pycocotools.coco import COCO
 ADD_BOUNDING_BOX_HARDCODED=True
 
 if ADD_BOUNDING_BOX_HARDCODED:
+    print("ADDING HARDCODED BOUNDING BOX")
     import PIL
     from PIL import ImageDraw
 
@@ -44,12 +46,12 @@ def process_coco_json(annotations, source):
             if ADD_BOUNDING_BOX_HARDCODED: 
                 # overwrite image_encoded with one that has the rectangle
                 # hardcoded on the img.
-                TEMP_IMAGE_FILENAME = "temp_image"
-                print("hardcoding bounding box")
                 new_image = add_bounding_box(image_filename, annotation)
-                new_image.save(TEMP_IMAGE_FILENAME, "JPEG")
-                temp_filename = TEMP_IMAGE_FILENAME
-                image_encoded = img_to_data(TEMP_IMAGE_FILENAME)
+                buffer = io.BytesIO()
+                new_image.save(buffer, "JPEG")
+                data64 = base64.b64encode(buffer.getvalue())
+                image_encoded = "data:image/jpeg;base64,{}".format(
+                    data64.decode("utf-8"))
  
             category_id = annotation['category_id']
             category = categories[category_id]
